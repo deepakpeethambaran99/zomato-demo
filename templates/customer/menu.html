@@ -1,0 +1,22 @@
+<thead>
+    <tr>
+      <th scope="col">Dish</th>
+      <th scope="col">Price</th>
+    </tr>
+  </thead>
+  <tbody id="tablebody">
+      {% for dish in dishes  %}
+        <tr>
+            <td>{{dish}}</td>
+            <td>{{dish.dish_price}}</td>
+            {% if dish in in_cart.dish %}
+                <td><i class='text-secondary'>Added</i></td>
+            {% else %}
+            <td><button type='button' class='btnadd btn btn-danger ' id='{{dish.id}}' type='button'> Add </button></td>
+            {% endif %}
+      {% endfor %}
+  </tbody>
+      
+  </tbody>
+
+  

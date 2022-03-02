@@ -1,0 +1,60 @@
+{% extends 'base.html' %} {% block body %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col login-banner"></div>
+    <div
+      class="col login-form"
+      style="padding-top: 130px; padding-left: 200px; width: 25%; color: Grey"
+    >
+      <h1 style="color: red">Welcome to Zomato Demo</h1>
+
+      <br />
+      <br />
+      {% comment %} login form {% endcomment %}
+      <h2 style="color: rgb(202, 166, 4)">Login</h2>
+      <br /><br />
+      {% if messages %} {% for message in messages%}
+      <div class="{{message.tags}}">
+        <p>{{message}}</p>
+        
+      </div>
+      {% endfor %} {% endif %}
+      <form method="POST" action="{% url 'loginauthenticate' %}">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label"
+            >User Name</label
+          >
+          <input
+            type="text"
+            name="username"
+            class="form-control"
+            id="exampleInputEmail1"
+            placeholder="eg. jhon123"
+            aria-describedby="emailHelp"
+            required
+          />
+          <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            name="password"
+            placeholder="password"
+            id="exampleInputPassword1"
+            required
+          />
+        </div>
+        <div class="mb-3 form-check">
+          <p>Don't have account? <a href="{% url 'authenticate' %}">Register now</a></p>
+          <p>Haven't Registered your Restaurant? <a href="{% url 'register-restaurant' %}">Register your restaurant now</a></p>
+        </div>
+        <button type="submit" class="btn btn-danger">Login</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock body %}

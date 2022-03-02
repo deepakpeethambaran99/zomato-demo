@@ -1,0 +1,116 @@
+{% extends 'base.html' %} {% block body %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col login-banner"></div>
+    <div
+      class="col signin-form"
+      style="padding-top: 130px; padding-left: 200px; width: 25%; color: Grey"
+    >
+      <h1 style="color: red">Welcome to Zomato Demo</h1>
+
+      <br />
+      <br />
+      {% comment %} login form {% endcomment %}
+      <h2 style="color: rgb(202, 166, 4)">Sign in</h2>
+      <br /><br />
+      {% if messages %} {% for message in messages%}
+      <div class="{{message.tags}}">
+        <p>{{message}}</p>
+      </div>
+      {% endfor %} {% endif %}
+      <form method="POST" action="{% url 'authenticate' %}">
+        {% csrf_token %}
+        <div class="row mb-3">
+          <div class="col-5">
+            <label for="firstname" class="form-label">First Name</label>
+            <input
+              type="text"
+              style="width: 92%"
+              class="form-control"
+              id="firstname"
+              name="firstname"
+              placeholder="First name"
+              aria-label="First name"
+              required
+            />
+          </div>
+
+          <div class="col-5">
+            <label for="lastname" class="form-label">Last Name</label>
+            <input
+              type="text"
+              id="lastname"
+              style="width: 93%"
+              class="form-control"
+              name="lastname"
+              placeholder="Last name"
+              aria-label="Last name"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="username" class="form-label">User name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="username"
+            name="username"
+            placeholder="eg. jhon123"
+            aria-describedby="emailHelp"
+            required
+          />
+          <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+        </div>
+
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label"
+            >Email address</label
+          >
+          <input
+            type="email"
+            class="form-control"
+            id="exampleInputEmail1"
+            name="emailid"
+            placeholder="eg. jhon@xyz.com"
+            aria-describedby="emailHelp"
+            required
+          />
+          <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
+        </div>
+
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            placeholder="password"
+            name="password"
+            id="exampleInputPassword1"
+            required
+            />
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label"
+            >Confirm Password</label
+          >
+          <input
+            type="password"
+            class="form-control"
+            placeholder="confirm password"
+            name="confirmpassword"
+            id="exampleInputPassword1"
+            required
+          />
+        </div>
+        <div class="mb-3 form-check">
+          <p>Have an account? <a href="{% url 'login' %}">Sign in</a></p>
+        </div>
+        <button type="submit" class="btn btn-danger">Sign in</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock body %}

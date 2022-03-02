@@ -1,0 +1,27 @@
+------------ Directories ---------------------
+-> zomatoDemoUsers --- authenticate users 
+-> zomatoDemoAdmin --- admin dashboard
+-> zomatoDemoRestaurants --- for restaurants 
+-> zomatoDemoCustomers --- for customers
+
+-----------------------------------------------
+zomatoDemoUsers -> authentication task
+
+-> login page, signup page
+-> create models for authentication
+-> make authentication work
+-> end of the authentication task        || completed : Feb 22 14:15 
+
+----------------------------------------------
+zomatoDemoAdmin -> dashboard for admin
+
+* where they admin can add restaurants authenticate them for a services.
+forms:
+    -> restaurants 
+    -> dishes
+----------------------------------------------
+zomatoDemoRestaurants
+    -> restaurant login
+    -> add dishes
+    -> show menu
+---------------------------------------------

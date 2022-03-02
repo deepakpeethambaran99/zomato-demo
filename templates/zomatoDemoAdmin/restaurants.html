@@ -1,0 +1,98 @@
+{% extends 'zomatoDemoAdmin/index.html' %}
+{% block dashboard-content %}
+    <br><br>
+    <h1>Restaurants</h1>
+    <br>
+    
+    <div class="container">
+        <div class="row">
+            {% if messages %} {% for message in messages%}
+      <div class="{{message.tags}}">
+        <p>{{message}}</p>
+        
+      </div>
+      {% endfor %} {% endif %}
+
+      {% if userform.errors %}
+       {% for field in userform %}
+           {% for error in field.errors %} 
+              <div class="alert alert-danger">
+                   <strong>{{ error|escape }}</strong>
+              </div>
+           {% endfor %}
+       {% endfor %}
+    {% endif %}
+
+            <p>
+                <button class="btn btn-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                  Add Restaurant
+                </button>
+              </p>
+              <div class="collapse" id="collapseExample">
+                <div class="card card-body">
+                    <form method="POST" class="form-group">
+                        {% csrf_token %}
+                        <div class="row">
+                        <div class="col">
+                        <label for="{{ userform.username.id_for_label }}">Username</label>
+                        {{ userform.username }}
+                        {{ userform.username.error }}
+                        <br>
+                        <label for="{{ userform.email.id_for_label }}">Email Id</label>
+                        {{ userform.email }}
+                        <br>
+                        <label for="{{ userform.password.id_for_label }}">Password</label>
+                        {{ userform.password }}
+                        {{ userform.password.error }}
+                        <br>
+                        <label for="{{ userform.confirm_password.id_for_label }}">Confirm password</label>
+                        {{ userform.confirm_password }}
+                        <br>
+                        </div>
+                        <div class="col">
+                        <label for="{{ restaurantform.restaurant_name.id_for_label }}">Restaurant Name</label>
+                        {{ restaurantform.restaurant_name }}
+                        <br>
+                        <label for="{{ restaurantform.restaurant_address.id_for_label }}">Restaurant Address</label>
+                        {{ restaurantform.restaurant_address }}
+                        <br><br>
+                        </div>
+                    </div>
+                        <button class="btn bg-success text-white float-end" style = "width : 20%;" >Save</button>
+                    </form>
+                </div>
+
+              </div>
+        </div>
+        <br>
+        <div class="row">
+            <hr>
+                <h3>Restaurant List</h3>
+            <br>
+            <table class="" id="myTable">
+                <thead>
+                  <tr>
+                    <th scope="col">Restaurant</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Email Id</th>
+                    <th scope="col">Address</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for restaurant  in restaurants %}
+                  <tr>
+                    <td>{{restaurant.restaurant_name}}</td>
+                    <td>{{restaurant.username}}</td>
+                    <td>{{restaurant.username.email}}</td>
+                    <td>{{restaurant.restaurant_address}}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+        </div>
+    </div>
+        <script>$(document).ready( function () {
+            $('#myTable').DataTable();
+        } );</script> 
+{% endblock dashboard-content %}
+

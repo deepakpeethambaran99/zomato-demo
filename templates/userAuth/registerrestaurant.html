@@ -1,0 +1,50 @@
+{% extends 'base.html' %} {% block body %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col login-banner"></div>
+    <div
+      class="col signin-form"
+      style="padding-top: 10px; padding-left: 200px; width: 25%; color: Grey"
+    >
+      <h1 style="color: red">Welcome to Zomato Demo</h1>
+      <br />
+      {% comment %} login form {% endcomment %}
+      <h2 style="color: rgb(202, 166, 4)">Regiter Restaurant</h2>
+      <br />
+      {% if messages %} {% for message in messages%}
+      <div class="{{message.tags}}">
+        <p>{{message}}</p>
+      </div>
+      {% endfor %} {% endif %}
+        <form method="POST" action="{% url 'register-restaurant' %}" class="form-group">
+          {% csrf_token %}
+          <label for="{{ userform.username.id_for_label }}">Username</label>
+          {{ userform.username }}
+          {{ userform.username.error }}
+          <br>
+          <label for="{{ userform.email.id_for_label }}">Email Id</label>
+          {{ userform.email }}
+          <br>
+          <label for="{{ userform.password.id_for_label }}">Password</label>
+          {{ userform.password }}
+          {{ userform.password.error }}
+          <br>
+          <label for="{{ userform.confirm_password.id_for_label }}">Confirm password</label>
+          {{ userform.confirm_password }}
+          <br>
+          <label for="{{ restaurantform.restaurant_name.id_for_label }}">Restaurant Name</label>
+          {{ restaurantform.restaurant_name }}
+          <br>
+          <label for="{{ restaurantform.restaurant_address.id_for_label }}">Restaurant Address</label>
+          {{ restaurantform.restaurant_address }}
+          <br>
+          <div class="mb-3 form-check">
+            <p>Have an account? <a href="{% url 'login' %}">Sign in</a></p>
+          </div>
+        <button type="submit" class="btn btn-danger w-100">Sign in</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock body %}

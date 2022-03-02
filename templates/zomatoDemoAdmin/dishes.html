@@ -1,0 +1,69 @@
+{% extends 'zomatoDemoAdmin/index.html' %}
+{% block dashboard-content %}
+    <br><br>
+    <h1>Dishes</h1>
+    <br>
+    
+    <div class="container">
+        <div class="row">
+            {% if messages %} {% for message in messages%}
+      <div class="{{message.tags}}">
+        <p>{{message}}</p>
+        
+      </div>
+      {% endfor %} {% endif %}
+
+      {% if userform.errors %}
+       {% for field in userform %}
+           {% for error in field.errors %} 
+              <div class="alert alert-danger">
+                   <strong>{{ error|escape }}</strong>
+              </div>
+           {% endfor %}
+       {% endfor %}
+    {% endif %}
+
+            <p>
+                <button class="btn btn-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                  Add Dishes
+                </button>
+              </p>
+              <div class="collapse" id="collapseExample">
+                <div class="card card-body">
+                    <form method="POST" class="form-group">
+                        {% csrf_token %}
+                        {{dishes_form.as_p}}
+                        <button class="btn bg-success text-white float-end" style = "width : 20%;" >Save</button>
+                    </form>
+                </div>
+
+              </div>
+        </div>
+        <br>
+        <div class="row">
+            <hr>
+                <h3>Restaurant List</h3>
+            <br>
+            <table class="" id="myTable">
+                <thead>
+                  <tr>
+                    <th scope="col">Dish</th>
+                    <th scope="col">Price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for dish  in dishes %}
+                  <tr>
+                    <td>{{dish.dish_name}}</td>
+                    <td>{{dish.dish_price}}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+        </div>
+    </div>
+        <script>$(document).ready( function () {
+            $('#myTable').DataTable();
+        } );</script> 
+{% endblock dashboard-content %}
+

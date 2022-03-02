@@ -1,0 +1,91 @@
+<h4 class="display-6 text-secondary">
+  Cart <span class="fa fa-shopping-bag"></span>
+</h4>
+<hr />
+{% if items_in_cart %}
+
+{% for restaurant, dishes in items_in_cart.items %}
+<div class="card p-3 m-4">
+    <h5 class="card-title text-danger"><i class="fa fa-shopping-bag"></i> &nbsp;{{restaurant}}</h5>
+    
+    <table class="table table-borderless">
+        <thead>
+            <tr class="text-secondary">
+                <th scope="col">Dish</th>
+                <th scope="col">Price</th>
+                <th scope="col">Total Price</th>
+                <th scope="col">Quantity</th>
+            </tr>
+        </thead>
+    <tbody id="tablebody">
+        {% for dish in dishes %}
+        <tr>
+            <td>{{dish}}</td>
+            <td id = "total_price">{{dish.total_price}}</td>
+            <td><input id="quantity-{{dish.id}}" type="number" class="quantity form-control" style="width: 70px;"  value="{{dish.quantity}}"></td>
+            <td><i class="remove fa fa-minus text-danger" id="remove-{{dish.id}}" data-bs-toggle="tooltip" data-bs-placement="right" title="remove" style="cursor: pointer;"></i></td> 
+
+        </tr>
+        {% with restaurantid=dish.restaurant.id %}
+        {% endwith %}
+        
+        {% endfor %}
+        </tbody>
+    </table>
+    <hr>
+    <a href="{% url 'place-order' restaurant.id %}" class="btn btn-danger">Place Order</a>
+    
+</div>
+{% endfor %}
+    {% else %}
+    <p class="text-secondary text-center" id="menumsg"><i>No items in cart</i></p>
+{% endif %}
+
+<script>
+
+    $(document).ready(function(){
+
+
+        function requestAjax(url,data,successfn){
+            var response_data;
+            
+            return response_data
+        }
+
+
+        $(document).on('change', 'input.quantity',function(){
+              var quantity = $(this).val();
+              var id = $(this).attr('id');
+              var price = $(this).parent('td').prev();
+              id = id.replace("quantity-","");
+              var url = '{% url "quantity" %}';
+              var data = {id: id, quantity: quantity}
+              $.ajax(
+                  {
+                      type:"GET",
+                      url: url,
+                      data: data,
+                      success: function( response ) 
+                      { 
+                        price.html(response['price']);
+                      }
+                  });
+        });
+        
+        $(document).on('click','td i.remove',function(){
+            var id = $(this).attr('id');
+            id = id.replace("remove-","");
+            $.ajax(
+                  {
+                      type:"GET",
+                      url: "{% url 'remove-from-cart' %}",
+                      data: {"id" : id},
+                      success: function( response ) 
+                      { 
+                        $("#cart").html(response['cart']);
+                      }
+                  });   
+        });
+
+    });    
+</script>

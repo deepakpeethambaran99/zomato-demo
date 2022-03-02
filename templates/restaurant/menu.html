@@ -1,0 +1,85 @@
+{% extends 'restaurant/index.html' %}
+{% block dashboard-content %}
+<br><br>
+<h1> &nbsp; Menu</h1>
+<br>
+
+<div class="container">
+    <div class="row">
+        {% if messages %} {% for message in messages%}
+      <div class="{{message.tags}}">
+        <p>{{message}}</p>
+        
+      </div>
+      {% endfor %} {% endif %}
+
+
+        <form method="POST" action="{% url 'menu' %}">
+            {% csrf_token %}
+            <div class="row">
+                <label for="addfood">Add Food</label>
+                <div class="col-6">
+                    <input class="form-control" style="width:100%;" name="dishname" type="text" id="addfood" placeholder="Type dish name here to find your dish...">
+                </div> 
+                <div class="col">
+
+                    <button class="btn bg-success text-white" >Add Dish to Menu</button>
+                    <button class="btn btn-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                      Add New Dish
+                    </button>
+                </div>
+            </div>   
+            <div class="row"><p>Note : After adding new dish please add it on menu through add dish to menu by searching it.</p></div>
+        </form>
+          <br>
+          <br>
+          
+        <div class="collapse m-4" id="collapseExample">
+          <div class="card card-body">
+              <form method="POST" action = "{% url 'newdish' %}" class="form-group">
+                  {% csrf_token %}
+                  {{dishes_form.as_p}}
+                  <button class="btn bg-success text-white float-end" style = "width : 20%;" >Save</button>
+              </form>
+          </div>
+
+        <script>$( function() {
+            var availableTags = [
+                {% for dish in dishsuggestion %}
+                    "{{dish}} -Rs. {{dish.dish_price}}",
+                {% endfor %}
+            ];
+            $( "#addfood" ).autocomplete({
+              source: availableTags
+            });
+          } );</script>
+        <br>
+    </div>
+        <br>
+        <hr>
+    <div class="row">
+            <h3>Menu</h3>
+            <br>
+        <br>
+        <table class="" id="myTable">
+            <thead>
+              <tr>
+                <th scope="col">Dish</th>
+                <th scope="col">Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for dish  in dishes %}
+              <tr>
+                <td>{{dish.dish_name}}</td>
+                <td>{{dish.dish_price}}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+    </div>
+</div>
+    <script>$(document).ready( function () {
+        $('#myTable').DataTable();
+    } );</script> 
+{% endblock dashboard-content %}

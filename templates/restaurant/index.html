@@ -1,0 +1,35 @@
+{% extends 'base.html' %} {% block title %}Zomato Demo - {{user.restaurants.restaurant_name}}{% endblock title%} {% block body %}
+<div class="container-fluid">
+  <div class="row">
+    <nav class="navbar navbar-expand-lg navbar-light" style = "color:white; background-color: #ff6161;">
+    {% comment %} <a href="/zomatoDemo/login/authenticate"> Go to Site</a> {% endcomment %}
+    <div class="col">
+        <a class="navbar-brand text-white" style="font-size: 1.8rem;" href="#">Zomato Demo - {{user.restaurants.restaurant_name}}</a>
+
+    </div>    
+    <div class="col">
+      <div class="float-end">
+        <a class="" href="{% url 'zomatoDemoHome' %}" style="color:white; padding-right:40px; ">Go to Zomato Demo Site</i></a>
+        <a class="" href="{% url 'logout' %}" style="color:white; padding-right:40px; font-size:1.6rem; " data-toggle="tooltip" data-placement="top" title="Log out"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
+      </div> 
+    </div> 
+      
+    </nav>
+  </div>
+
+  <div class="row">
+      <div class="col-sm-1 sidebar sticky-top">
+          <ul>
+            <a href="{% url 'zomatoDemoRestaurant' %}"><li>Home</li></a>
+              <a href="{% url 'menu' %}"><li>Menu</li></a>
+              <a href="{% url 'resorders' %}"><li>Orders</li></a>
+              <!-- <a href="{% url 'dishes' %}"><li>Dishes</li></a> -->
+          </ul>
+      </div>
+
+      <div class="col">
+          {% block dashboard-content %}{% endblock dashboard-content %}
+      </div>
+  </div>
+</div>
+{% endblock body %}

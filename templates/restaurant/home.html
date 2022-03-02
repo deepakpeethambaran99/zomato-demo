@@ -1,0 +1,103 @@
+{% extends 'restaurant/index.html' %} {% block dashboard-content %}
+
+<div class="container-fluid">
+  <div class="row p-5">
+    <h2 class="display-5">Home</h2>
+    <hr />
+    <form method="POST" action="{% url 'zomatoDemoRestaurant' %}">
+        {% csrf_token %}
+      <div class="row">
+        <h4 class="display-6 mt-3">Sales</h4>
+        <div class="col-2">
+          <label for="startDate"> From :</label>
+          <input
+            type="date"
+            class="form-control"
+            value=""
+            name="fromDate"
+            id="startDate"
+            width="276"
+          />
+        </div>
+        <div class="col-2">
+          <label for="startDate"> To :</label>
+          <input
+            type="date"
+            class="form-control"
+            value=""
+            id="startDate"
+            name="toDate"
+            width="276"
+          />
+        </div>
+        <div class="col-1">
+          <br />
+          <button type="submit" class="btn btn-danger">Filter</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="ms-5">
+      <canvas  id="myChart"  ></canvas>
+      <p>Sales from : {{fromdate}} - to : {{todate}}</p>    
+  </div>
+</div>
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js" integrity="sha512-QSkVNOCYLtj73J4hbmVoOV6KVZuMluZlioC+trLpewV8qMjsWqlIQvkn1KGX2StWvPMdWGBqim1xlC8krl1EKQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    const ctx = document.getElementById('myChart').getContext('2d');
+    ctx.canvas.width = 700;
+    ctx.canvas.height = 400;
+    const myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: [
+              {% for lables in sales_data %}
+                '{{lables.dish_details}}',
+              {% endfor %}
+            ],
+            datasets: [{
+                label: '# Number of dishes sold',
+                data: [
+                {% for lables in sales_data %}
+                  {{lables.dishes_count}},
+                {% endfor %}
+                ],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1,
+            }]
+        },
+        options: {
+            responsive: false,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
+
+
+
+{% endblock dashboard-content %}

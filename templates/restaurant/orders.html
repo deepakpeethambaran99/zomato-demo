@@ -1,0 +1,55 @@
+{% extends 'restaurant/index.html' %}
+{% block dashboard-content %}
+<br><br>
+<h1> &nbsp; Menu</h1>
+<br>
+
+<div class="container">
+    <div class="row">
+        {% if messages %} {% for message in messages%}
+      <div class="{{message.tags}}">
+        <p>{{message}}</p>
+        
+      </div>
+      {% endfor %} {% endif %}
+
+         
+    <div class="row">
+            <h3>Orders</h3>
+            <br>
+        <br>
+        <h6>Total Orders : {{orders.count}}</h6>
+        <br>
+        <br>
+        <table class="m-2" id="myTable">
+            <thead>
+              <tr>
+                <th scope="col">Order Id</th>
+                <th scope="col">Customer Name</th>
+                <th scope="col">Items</th>
+                <th scope="col">Paid Amount</th>
+                <th scope="col">Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for order  in orders %}
+              <tr>
+                <td>{{order.order_id}}</td>
+                <td>{{order.user.get_full_name}}</td>
+                <td>
+                    {% for d in order.dishes.all %}
+                    {{d}}({{d.quantity}})-Rs.{{d.total_price}},
+                    {% endfor %}
+                </td>
+                <td>{{order.amount}}</td>
+                <td>{{order.order_date}}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+    </div>
+</div>
+    <script>$(document).ready( function () {
+        $('#myTable').DataTable();
+    } );</script> 
+{% endblock dashboard-content %}
