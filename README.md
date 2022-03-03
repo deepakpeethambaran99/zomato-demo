@@ -42,7 +42,7 @@ On windows:
 venv/Scripts/activate
 ```
 
-#### Installing requirements.txt
+#### Installing Dependencies:
 
 On linux:
 ```sh
